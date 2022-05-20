@@ -3,26 +3,28 @@ Given an integer k and a string s, find the length of the longest substring that
 
 For example, given s = "abcba" and k = 2, the longest substring with k distinct characters is "bcb".
 """
+import sys
 import time
+
 
 # brute force attempt would be to loop through the string, and for each point,
 # store the character and test each other encountered point.
 
-# NOTE: This was a wrong solution that found the longest substring with at least k distinct characters.
-#  I figured I'd leave it even though there are probably better implementations
-
-def wrong_solution(input : str, k : int):
+def find_longest_substring(input_str: str, k: int):
     found_substrings = []
-    i = 0
-    while i < len(input) - 1:
-        encountered_characters = [input[i]]
-        i += 1
-        while input[i] not in encountered_characters and i < len(input) - 1:
-            encountered_characters.append(input[i])
-            i += 1
-        if len(encountered_characters) == k:
-            found_substrings.append(encountered_characters)
-    return max(found_substrings, key=len)
+    max_size = -1 * sys.maxsize
+    for i in range(len(input_str)):
+        size = 1
+        encountered_chars = set(input_str[i])
+        for j in range(i + 1, len(input_str)):
+            if len(encountered_chars) >= k and input_str[j] not in encountered_chars:
+                break
+            else:
+                size += 1
+                encountered_chars.add(input_str[j])
+        if size > max_size:
+            max_size = size
+    return max_size
 
 
 def print_time(t0, t1, opt_str: str = None):
@@ -35,8 +37,8 @@ if __name__ == "__main__":
     test2 = "abcdefghijklmnopqrstuvwxyz"
     test3 = "abcbhdusbbbsaksdgwkwl"
     start = time.perf_counter()
-    print(wrong_solution(test1, 2))
-    print(wrong_solution(test2, 3))
-    print(wrong_solution(test3, 4))
+    print(find_longest_substring(test1, 2))
+    print(find_longest_substring(test2, 2))
+    print(find_longest_substring(test3, 2))
     t = time.perf_counter()
     print_time(start, t)
