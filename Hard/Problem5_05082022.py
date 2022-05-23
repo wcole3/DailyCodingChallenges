@@ -28,6 +28,8 @@ def solution(input : []):
     # if we get here there were no missing values so the next missing
     # value is based on the first value
     return input[0] + 1
+
+
 if __name__ == "__main__":
     test = [3, 4, -1, 1, 4, 3, -5]
     print(solution(test))

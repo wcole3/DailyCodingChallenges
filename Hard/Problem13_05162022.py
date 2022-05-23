@@ -11,7 +11,7 @@ import time
 # store the character and test each other encountered point.
 
 def find_longest_substring(input_str: str, k: int):
-    found_substrings = []
+    found_substring = ""
     max_size = -1 * sys.maxsize
     for i in range(len(input_str)):
         size = 1
@@ -24,7 +24,8 @@ def find_longest_substring(input_str: str, k: int):
                 encountered_chars.add(input_str[j])
         if size > max_size:
             max_size = size
-    return max_size
+            found_substring = input_str[i:i + size]
+    return max_size, found_substring
 
 
 def print_time(t0, t1, opt_str: str = None):
